@@ -1,0 +1,24 @@
+{
+  "name": "fetch-store",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf lib && node ./build.js",
+    "release": "yarn run build && standard-version && npm publish --registry=https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "immer": "^1.8.2",
+    "lodash": "^4.17.11",
+    "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "@types/lodash": "^4.14.119",
+    "build-my-package": "^0.0.13",
+    "standard-version": "^4.4.0",
+    "ts-lint": "^4.5.1",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.2"
+  }
+}
