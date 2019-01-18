@@ -12,7 +12,8 @@
     "lib": ["dom", "es7"],
     "module": "commonjs",
     "esModuleInterop": true,
-    "keyofStringsOnly": true
+    "keyofStringsOnly": true,
+
   },
   "exclude": ["node_modules", "lib", "es"]
 }
