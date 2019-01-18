@@ -1,6 +1,17 @@
 # Request-store
 
-record the request status and cache all res into memory
+Record request status and cache all responses into memory
+
+# Why
+
+Why we should record all request status and cache all responses into memory
+
+1. use all request status to control a gloabl Loading component
+2. handle error or success info in global
+3. combine several response for further usage
+
+With Redux, it's easy to achieve that, but we need to write a lot of boilerplater,
+request-store aim to solve this problem.
 
 # Usage
 
