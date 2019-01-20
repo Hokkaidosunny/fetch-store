@@ -1,5 +1,7 @@
 # Request-store
 
+[![Build Status](https://travis-ci.org/Hokkaidosunny/request-store.svg?branch=master)](https://travis-ci.org/Hokkaidosunny/request-store)
+
 Record request status and cache all responses into memory
 
 # Why
