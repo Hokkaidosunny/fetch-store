@@ -52,7 +52,15 @@ loadTodos().then(res => {
   console.log(res)
 })
 
-/** fetch-store
+/** request-store
+// fetch start
+{
+  "TODOS": {
+    "isFetching": true
+  }
+}
+
+// fetch success
 {
   "TODOS": {
     "isFetching": false,
@@ -128,6 +136,12 @@ interface CreateRequestStoreOptions {
 }
 ```
 
+- initStore: init store
+- onRequestStart: Global request start handler, will be called on every request start
+- onRequestSuccess: Global request success handler, will be called on every request success
+- onRequestFail: Global request fail handler, will be called on every request fail
+- all lifecycle method return value will be merge into request store
+
 ## request(opts: RequestOptions)
 
 ```javascript
@@ -141,6 +155,15 @@ interface RequestOptions {
   onRequestFail?: (id: string, e: Error) => any
 }
 ```
+
+- id: uniq string
+- url: url
+- options: fetch options
+- bailout: if cancel this request
+- onRequestStart: this request start handler, will be called this request start
+- onRequestSuccess: this request success handler, will be called this request success
+- onRequestFail: this request fail handler, will be called this request fail
+- self lifecycle handler return value can overwrite the global lifecycle handler return value
 
 ## subscribe(listener)
 

@@ -3,6 +3,14 @@
   "version": "0.0.3",
   "main": "lib/index.js",
   "license": "MIT",
+  "keywords": [
+    "fetch",
+    "redux",
+    "api",
+    "store",
+    "request",
+    "middleware"
+  ],
   "scripts": {
     "build": "rm -rf lib && bmp src -l typescript",
     "release": "yarn run build && standard-version && npm publish --registry=https://registry.npmjs.org/",
