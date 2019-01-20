@@ -9,6 +9,7 @@ function createStore(initState?: Store) {
 
   const listeners: Listener[] = []
 
+  // updateStore
   function updateStore(nextStore: Store) {
     if (nextStore == store) {
       return
@@ -19,10 +20,12 @@ function createStore(initState?: Store) {
     listeners.forEach(listener => listener(store))
   }
 
+  // getStore
   function getStore() {
     return store
   }
 
+  // subscribe store
   function subscribe(listener: Listener) {
     listeners.push(listener)
 

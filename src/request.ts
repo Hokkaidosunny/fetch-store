@@ -1,4 +1,5 @@
 import createStore, { Store } from './store'
+import { requestStart, requestSuccess, requestFail } from './lifecycle'
 
 /**
  * types
@@ -40,7 +41,7 @@ function createRequestStore(opts?: CreateRequestStoreOptions) {
   /**
    * update request status to store
    */
-  function updateRequestStatus(opts: ActionOptions) {
+  function updateRequest(opts: ActionOptions) {
     const { id, payload } = opts
 
     const curStore = getStore()
@@ -54,92 +55,6 @@ function createRequestStore(opts?: CreateRequestStoreOptions) {
     const nextStore = { ...curStore }
 
     updateStore(nextStore)
-  }
-
-  // fetch start
-  const requestStart = (
-    id: string,
-    onRequestStart?: Function,
-    global_onRequestStart?: Function
-  ) => {
-    let global_payload = {}
-    let self_payload = {}
-
-    if (global_onRequestStart) {
-      global_payload = global_onRequestStart(id)
-    }
-
-    if (onRequestStart) {
-      self_payload = onRequestStart(id)
-    }
-
-    const payload = {
-      ...global_payload,
-      ...self_payload
-    }
-
-    updateRequestStatus({
-      id,
-      payload
-    })
-  }
-
-  // fetch success
-  const requestSuccess = (
-    id: string,
-    json: object,
-    onRequestSuccess?: Function,
-    global_onRequestSuccess?: Function
-  ) => {
-    let global_payload = {}
-    let self_payload = {}
-
-    if (global_onRequestSuccess) {
-      global_payload = global_onRequestSuccess(id, json)
-    }
-
-    if (onRequestSuccess) {
-      self_payload = onRequestSuccess(id, json)
-    }
-
-    const payload = {
-      ...global_payload,
-      ...self_payload
-    }
-
-    updateRequestStatus({
-      id,
-      payload
-    })
-  }
-
-  // fetch fail
-  const requestFail = (
-    id: string,
-    error: Error,
-    onRequestFail?: Function,
-    global_onRequestFail?: Function
-  ) => {
-    let global_payload = {}
-    let self_payload = {}
-
-    if (global_onRequestFail) {
-      global_payload = global_onRequestFail(id, error)
-    }
-
-    if (onRequestFail) {
-      self_payload = onRequestFail(id, error)
-    }
-
-    const payload = {
-      ...global_payload,
-      ...self_payload
-    }
-
-    updateRequestStatus({
-      id,
-      payload
-    })
   }
 
   /**
@@ -162,17 +77,34 @@ function createRequestStore(opts?: CreateRequestStoreOptions) {
       return
     }
 
-    requestStart(id, onRequestStart, global_onRequestStart)
+    requestStart({
+      id,
+      selfHook: onRequestStart,
+      globalHook: global_onRequestStart,
+      updateRequest
+    })
 
     try {
       const res = await fetch(url, options)
       const json = await res.json()
 
-      requestSuccess(id, json, onRequestSuccess, global_onRequestSuccess)
+      requestSuccess({
+        id,
+        json,
+        selfHook: onRequestSuccess,
+        globalHook: global_onRequestSuccess,
+        updateRequest
+      })
 
       return json
     } catch (e) {
-      requestFail(id, e, onRequestFail, global_onRequestFail)
+      requestFail({
+        id,
+        error: e,
+        selfHook: onRequestFail,
+        globalHook: global_onRequestFail,
+        updateRequest
+      })
 
       return Promise.reject(e)
     }

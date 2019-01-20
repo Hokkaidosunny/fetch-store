@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf lib && bmp src -l typescript",
-    "release": "yarn run build && standard-version && npm publish --registry=https://registry.npmjs.org/"
+    "release": "yarn run build && standard-version && npm publish --registry=https://registry.npmjs.org/",
+    "test": "jest"
   },
   "dependencies": {
     "tslib": "^1.9.3"
@@ -14,6 +15,7 @@
     "@types/node": "^10.12.18",
     "build-my-package": "^0.0.16",
     "isomorphic-fetch": "^2.2.1",
+    "jest": "^23.6.0",
     "standard-version": "^4.4.0",
     "ts-lint": "^4.5.1",
     "tslint-config-prettier": "^1.17.0",
